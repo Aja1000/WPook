@@ -47,7 +47,7 @@
             fileindex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index")).First
         Catch ex As Exception
             ' Recogemos los archivos .wpok que existan en la carpeta proyecto
-            Dim wpok = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index"))
+            Dim wpok = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.wpok")
             Dim index As String = ""
             'Con bucle recogemos todos los nombres del fichero separandolos con un pipe|
             'Vale cualquier caracter que no se pueda usar para nombre de fichero
