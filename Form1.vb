@@ -47,7 +47,7 @@
             fileindex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index")).First
         Catch ex As Exception
             ' Recogemos los archivos .wpok que existan en la carpeta proyecto
-            Dim wpok = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index"))
+            Dim wpok = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, ".wpok")
             Dim index As String = ""
             'Con bucle recogemos todos los nombres del fichero separandolos con un pipe|
             'Vale cualquier caracter que no se pueda usar para nombre de fichero
@@ -89,7 +89,7 @@
 
                 SaveFile.Filter = "Archivos de Texto (*.wpok*)|*.wpok"
                 SaveFile.InitialDirectory = proyectPath
-                SaveFile.FileName = "" ' probar
+                SaveFile.FileName = ""
 
                 If SaveFile.ShowDialog = Windows.Forms.DialogResult.OK Then
 
@@ -142,7 +142,8 @@
     End Sub
     Private Sub tsb_refrescarCapitulos_Click(sender As Object, e As EventArgs) Handles tsb_reloadChapters.Click
         'Al final este objeto acabara por desaparecer ya que la recarga se hara de forma automatica
-        reloadChapters()
+        'reloadChapters()
+        filesindex()
     End Sub
     Private Sub tsmi_cerrarProyecto_Click(sender As Object, e As EventArgs) Handles tsmi_closeProyecto.Click
         closeProyect()
@@ -198,5 +199,35 @@
         End If
         Return index
     End Function
+
+    Public Sub filesindex() 'Aun no funciona 
+        Dim arIndex As ArrayList
+        Dim arWpok
+        For Each namechapter As String In My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, ".wpok")
+            arWpok.Add(IO.Path.GetFileNameWithoutExtension(namechapter))
+        Next namechapter
+
+        Dim fileIndex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index")).First
+        Dim fileReader As String = My.Computer.FileSystem.ReadAllText(fileIndex)
+        If fileReader <> "" Then fileReader = fileReader.TrimEnd("|")
+        Dim fileNames() As String = fileReader.Split("|")
+        For chapters As Integer = 0 To fileNames.GetUpperBound(0)
+            arIndex.Add(fileNames(chapters))
+        Next
+
+        For Each elementIndex As String In arIndex
+            MsgBox(elementIndex)
+            For elementWpok As Integer = 0 To arWpok
+                MsgBox(elementWpok)
+            Next
+        Next
+
+
+
+
+
+
+    End Sub
+
 
 End Class

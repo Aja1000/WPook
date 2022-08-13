@@ -89,8 +89,8 @@
     End Sub
     Private Sub reloadListChapters()
         lstBox_chapters.Items.Clear()
-        Dim fileIndex = My.Computer.FileSystem.GetFiles(Form1.proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.index")
-        Dim fileReader As String = My.Computer.FileSystem.ReadAllText(fileIndex.First)
+        Dim fileIndex = My.Computer.FileSystem.GetFiles(Form1.proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.index").First
+        Dim fileReader As String = My.Computer.FileSystem.ReadAllText(fileIndex)
         If fileReader <> "" Then fileReader = fileReader.TrimEnd("|")
         Dim fileNames() As String = fileReader.Split("|")
         For chapters As Integer = 0 To fileNames.GetUpperBound(0)
@@ -108,4 +108,25 @@
         Form1.reloadChapters()
     End Sub
 
+    Private Sub btn_duplicate_Click(sender As Object, e As EventArgs) Handles btn_duplicate.Click
+        My.Computer.FileSystem.CopyFile("C:\TestFolder\test.txt",
+"C:\TestFolder\test2.txt", Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs, FileIO.UICancelOption.DoNothing)
+    End Sub
+
+    Private Sub btn_import_Click(sender As Object, e As EventArgs) Handles btn_import.Click
+        OpenFileDialog.Filter = "Archivos de Texto (*.wpok*)|*.wpok| Archivos de Texto (*.txt)|(*.txt)"
+        OpenFileDialog.FileName = ""
+        If OpenFileDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+
+            Dim fileName = OpenFileDialog.FileName
+            MsgBox(fileName)
+            MsgBox(IO.Path.GetFileNameWithoutExtension(fileName) & ".wpok")
+            My.Computer.FileSystem.CopyFile(fileName, IO.Path.GetFileNameWithoutExtension(fileName) & ".wpok")
+            reindexing()
+
+
+
+        End If
+
+    End Sub
 End Class

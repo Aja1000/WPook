@@ -29,10 +29,11 @@ Partial Class WinRechapter
         Me.nud_rechapters = New System.Windows.Forms.NumericUpDown()
         Me.btn_rechapter = New System.Windows.Forms.Button()
         Me.btn_renameChapter = New System.Windows.Forms.Button()
-        Me.btn_indexing = New System.Windows.Forms.Button()
+        Me.btn_duplicate = New System.Windows.Forms.Button()
         Me.txt_rename = New System.Windows.Forms.TextBox()
         Me.btn_deleteChapter = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btn_import = New System.Windows.Forms.Button()
+        Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         CType(Me.nud_rechapters, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -98,14 +99,14 @@ Partial Class WinRechapter
         Me.btn_renameChapter.Text = "Renombrar Capitulo"
         Me.btn_renameChapter.UseVisualStyleBackColor = True
         '
-        'btn_indexing
+        'btn_duplicate
         '
-        Me.btn_indexing.Location = New System.Drawing.Point(202, 235)
-        Me.btn_indexing.Name = "btn_indexing"
-        Me.btn_indexing.Size = New System.Drawing.Size(80, 71)
-        Me.btn_indexing.TabIndex = 8
-        Me.btn_indexing.Text = "Duplicar???"
-        Me.btn_indexing.UseVisualStyleBackColor = True
+        Me.btn_duplicate.Location = New System.Drawing.Point(202, 235)
+        Me.btn_duplicate.Name = "btn_duplicate"
+        Me.btn_duplicate.Size = New System.Drawing.Size(80, 71)
+        Me.btn_duplicate.TabIndex = 8
+        Me.btn_duplicate.Text = "Duplicar???"
+        Me.btn_duplicate.UseVisualStyleBackColor = True
         '
         'txt_rename
         '
@@ -123,14 +124,21 @@ Partial Class WinRechapter
         Me.btn_deleteChapter.Text = "Eliminar Capitulo"
         Me.btn_deleteChapter.UseVisualStyleBackColor = True
         '
-        'Button1
+        'btn_import
         '
-        Me.Button1.Location = New System.Drawing.Point(306, 235)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(80, 71)
-        Me.Button1.TabIndex = 11
-        Me.Button1.Text = "Importar"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btn_import.Location = New System.Drawing.Point(306, 235)
+        Me.btn_import.Name = "btn_import"
+        Me.btn_import.Size = New System.Drawing.Size(80, 71)
+        Me.btn_import.TabIndex = 11
+        Me.btn_import.Text = "Importar"
+        Me.btn_import.UseVisualStyleBackColor = True
+        '
+        'OpenFileDialog
+        '
+        Me.OpenFileDialog.FileName = "OpenFileDialog1"
+        Me.OpenFileDialog.InitialDirectory = "Documentos"
+        Me.OpenFileDialog.RestoreDirectory = True
+        Me.OpenFileDialog.Title = "Importar Capitulos"
         '
         'WinRechapter
         '
@@ -138,10 +146,10 @@ Partial Class WinRechapter
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.ClientSize = New System.Drawing.Size(448, 318)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btn_import)
         Me.Controls.Add(Me.btn_deleteChapter)
         Me.Controls.Add(Me.txt_rename)
-        Me.Controls.Add(Me.btn_indexing)
+        Me.Controls.Add(Me.btn_duplicate)
         Me.Controls.Add(Me.btn_renameChapter)
         Me.Controls.Add(Me.btn_rechapter)
         Me.Controls.Add(Me.nud_rechapters)
@@ -169,8 +177,9 @@ Partial Class WinRechapter
     Friend WithEvents nud_rechapters As NumericUpDown
     Friend WithEvents btn_rechapter As Button
     Friend WithEvents btn_renameChapter As Button
-    Friend WithEvents btn_indexing As Button
+    Friend WithEvents btn_duplicate As Button
     Friend WithEvents txt_rename As TextBox
     Friend WithEvents btn_deleteChapter As Button
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btn_import As Button
+    Friend WithEvents OpenFileDialog As OpenFileDialog
 End Class
