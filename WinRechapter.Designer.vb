@@ -32,6 +32,7 @@ Partial Class WinRechapter
         Me.btn_indexing = New System.Windows.Forms.Button()
         Me.txt_rename = New System.Windows.Forms.TextBox()
         Me.btn_deleteChapter = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.nud_rechapters, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -101,9 +102,9 @@ Partial Class WinRechapter
         '
         Me.btn_indexing.Location = New System.Drawing.Point(202, 235)
         Me.btn_indexing.Name = "btn_indexing"
-        Me.btn_indexing.Size = New System.Drawing.Size(231, 71)
+        Me.btn_indexing.Size = New System.Drawing.Size(80, 71)
         Me.btn_indexing.TabIndex = 8
-        Me.btn_indexing.Text = "INDEXAR"
+        Me.btn_indexing.Text = "Duplicar???"
         Me.btn_indexing.UseVisualStyleBackColor = True
         '
         'txt_rename
@@ -122,12 +123,22 @@ Partial Class WinRechapter
         Me.btn_deleteChapter.Text = "Eliminar Capitulo"
         Me.btn_deleteChapter.UseVisualStyleBackColor = True
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(306, 235)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(80, 71)
+        Me.Button1.TabIndex = 11
+        Me.Button1.Text = "Importar"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'WinRechapter
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.ClientSize = New System.Drawing.Size(448, 318)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.btn_deleteChapter)
         Me.Controls.Add(Me.txt_rename)
         Me.Controls.Add(Me.btn_indexing)
@@ -161,4 +172,5 @@ Partial Class WinRechapter
     Friend WithEvents btn_indexing As Button
     Friend WithEvents txt_rename As TextBox
     Friend WithEvents btn_deleteChapter As Button
+    Friend WithEvents Button1 As Button
 End Class

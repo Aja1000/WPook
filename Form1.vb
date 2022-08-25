@@ -3,6 +3,7 @@
     'Solo hasta el directorio donde se guardan los archivos
     'Ej: C:\Users\PabloAja1000\Documents\Libros\ProyectoWPook
     Public proyectPath As String
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'proyecto_blanco()
         closeProyect()
@@ -15,12 +16,13 @@
         If FolderBrowser.ShowDialog() = Windows.Forms.DialogResult.OK Then
             proyectPath = FolderBrowser.SelectedPath
             reloadChapters()
-            Me.Text = IO.Path.GetFileName(proyectPath) & " - WPook"
+            Me.Text = proyectFolder() & " - WPook"
             rtxt_texto.Enabled = True
             tscb_chapters.Enabled = True
             tscb_chapters.SelectedIndex = 0
             tsb_reloadChapters.Enabled = True
             tsb_rechapter.Enabled = True
+            tsmi_reindexing.Enabled = True
         End If
 
     End Sub
@@ -34,59 +36,15 @@
         rtxt_texto.Text = ""
         tsb_reloadChapters.Enabled = False
         tsb_rechapter.Enabled = False
+        tsmi_reindexing.Enabled = False
 
     End Sub
-    'Public Sub reloadChapters()
-    '    tscb_chapters.Items.Clear()
-    '    ' Recogemos los archivos .wpok que existan en la carpeta proyecto
-    '    Dim wpok = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.wpok")
-    '    Dim index As String = ""
-    '    'Con bucle recogemos todos los nombres del fichero separandolos con un pipe|
-    '    'Vale cualquier caracter que no se pueda usar para nombre de fichero
-    '    For Each namechapter As String In wpok
-    '        index = index & IO.Path.GetFileNameWithoutExtension(namechapter) & "|"
-    '    Next namechapter
-    '    'Eliminamos el ultimo "separador" y finalmente creamos el archivo index
-    '    index = index.TrimEnd("|")
-    '    My.Computer.FileSystem.WriteAllText(proyectPath & "\" & IO.Path.GetFileName(proyectPath) & ".index", index, False)
-
-    '    Dim fileIndex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.index")
-    '    Dim fileReader As String = My.Computer.FileSystem.ReadAllText(fileIndex.First)
-
-    '    If fileReader <> "" Then
-    '        Dim fileNames() As String = fileReader.Split("|")
-    '        For chapters As Integer = 0 To fileNames.GetUpperBound(0)
-    '            tscb_chapters.Items.Add(fileNames(chapters))
-    '        Next
-    '        tscb_chapters.Items.Add("Nuevo Capitulo")
-    '    Else
-    '        tscb_chapters.Items.Add("Nuevo Capitulo")
-    '    End If
-    '    tscb_chapters.SelectedIndex = 0
-
-    '    ' Revisar idea y combinarla con lo nuevo 
-    '    ' El metodo nuevo falla si metes un archivo a mano que no este en el index. Parcialmente solucionado pero se puede mejorar
-
-    '    'Dim chapters = My.Computer.FileSystem.GetFiles(rutaProyecto, FileIO.SearchOption.SearchAllSubDirectories, "*.wpok")
-    '    'If IsNothing(chapters) Then
-    '    '    cb_capitulos.Items.Add("Nuevo Capitulo")
-    '    'Else
-    '    '    For Each file As String In chapters
-    '    '        Dim fileName = IO.Path.GetFileNameWithoutExtension(file)
-    '    '        cb_capitulos.Items.Add(fileName)
-    '    '    Next
-    '    '    cb_capitulos.Items.Add("Nuevo Capitulo")
-    '    'End If
-
-    'End Sub
-
     Public Sub reloadChapters()
         tscb_chapters.Items.Clear()
         Dim fileindex
         ' Creamos el index en caso de que no existadel Index 
-        'If tscb_chapters.Items.Count > 1 And My.Computer.FileSystem.FileExists(fileIndex) Then
         Try
-            fileindex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.index").First
+            fileindex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index")).First
         Catch ex As Exception
             ' Recogemos los archivos .wpok que existan en la carpeta proyecto
             Dim wpok = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.wpok")
@@ -97,14 +55,14 @@
                 index = index & IO.Path.GetFileNameWithoutExtension(namechapter) & "|"
             Next namechapter
             'Eliminamos el ultimo "separador" y finalmente creamos el archivo index
-            index = index.TrimEnd("|")
-            My.Computer.FileSystem.WriteAllText(proyectPath & "\" & IO.Path.GetFileName(proyectPath) & ".index", index, False)
-            fileindex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.index").First
+            My.Computer.FileSystem.WriteAllText(proyectPath & "\" & proyectFolder("index"), index, False)
+            fileindex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index")).First
         End Try
 
         Dim fileReader As String = My.Computer.FileSystem.ReadAllText(fileindex)
 
         If fileReader <> "" Then
+            fileReader = fileReader.TrimEnd("|")
             Dim fileNames() As String = fileReader.Split("|")
             For chapters As Integer = 0 To fileNames.GetUpperBound(0)
                 tscb_chapters.Items.Add(fileNames(chapters))
@@ -122,7 +80,6 @@
 
     Public Sub save()
         If System.IO.Directory.Exists(proyectPath) Then
-            MsgBox("coge path")
             If tscb_chapters.SelectedItem <> "Nuevo Capitulo" Then 'GUARDAR
                 Dim archivo As String = proyectPath & "\" & tscb_chapters.SelectedItem & ".wpok"
                 My.Computer.FileSystem.WriteAllText(archivo, rtxt_texto.Text, False)
@@ -132,22 +89,22 @@
 
                 SaveFile.Filter = "Archivos de Texto (*.wpok*)|*.wpok"
                 SaveFile.InitialDirectory = proyectPath
+                SaveFile.FileName = "" ' probar
 
                 If SaveFile.ShowDialog = Windows.Forms.DialogResult.OK Then
 
                     My.Computer.FileSystem.WriteAllText(SaveFile.FileName, rtxt_texto.Text, False)
-                    My.Computer.FileSystem.WriteAllText(proyectPath & "\" & IO.Path.GetFileName(proyectPath) & ".index",
+                    My.Computer.FileSystem.WriteAllText(proyectPath & "\" & proyectFolder("index"),
                                                         IO.Path.GetFileNameWithoutExtension(SaveFile.FileName) & "|", True)
                     reloadChapters()
                     'Tras recargar el combobox le decimos que se quede en elemento creado que por logica permanecera en ultima posicion
                     tscb_chapters.SelectedIndex = tscb_chapters.Items.Count - 2
                 End If
             End If
-        Else
+        Else ' Metodo para cuando empieces en blanco al inicia la app
             'SaveFile.Filter = "Archivos de Texto (*.wpok*)|*.wpok"
 
             'If SaveFile.ShowDialog = Windows.Forms.DialogResult.OK Then
-
             '    My.Computer.FileSystem.WriteAllText(SaveFile.FileName, rtxt_texto.Text, False)
             '    My.Computer.FileSystem.WriteAllText(SaveFile.FileName & "\" & IO.Path.GetFileNameWithoutExtension(SaveFile.FileName) & ".index",
             '                                            IO.Path.GetFileNameWithoutExtension(SaveFile.FileName) & "|", True)
@@ -232,5 +189,14 @@
         tscb_chapters.Items.Add("Nuevo Capitulo")
         tscb_chapters.SelectedIndex = 0
     End Sub
+
+    Public Function proyectFolder(Optional ByVal index As String = "index")
+        If index = "index" Then
+            index = IO.Path.GetFileName(proyectPath) & ".index"
+        Else
+            index = IO.Path.GetFileName(proyectPath)
+        End If
+        Return index
+    End Function
 
 End Class
