@@ -105,7 +105,7 @@ Partial Class WinRechapter
         Me.btn_duplicate.Name = "btn_duplicate"
         Me.btn_duplicate.Size = New System.Drawing.Size(80, 71)
         Me.btn_duplicate.TabIndex = 8
-        Me.btn_duplicate.Text = "Duplicar???"
+        Me.btn_duplicate.Text = "Duplicar"
         Me.btn_duplicate.UseVisualStyleBackColor = True
         '
         'txt_rename

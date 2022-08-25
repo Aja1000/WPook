@@ -143,7 +143,7 @@
     Private Sub tsb_refrescarCapitulos_Click(sender As Object, e As EventArgs) Handles tsb_reloadChapters.Click
         'Al final este objeto acabara por desaparecer ya que la recarga se hara de forma automatica
         'reloadChapters()
-        filesindex()
+        'filesindex()
     End Sub
     Private Sub tsmi_cerrarProyecto_Click(sender As Object, e As EventArgs) Handles tsmi_closeProyecto.Click
         closeProyect()
@@ -200,34 +200,34 @@
         Return index
     End Function
 
-    Public Sub filesindex() 'Aun no funciona 
-        Dim arIndex As ArrayList
-        Dim arWpok
-        For Each namechapter As String In My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, ".wpok")
-            arWpok.Add(IO.Path.GetFileNameWithoutExtension(namechapter))
-        Next namechapter
+    'Public Sub filesindex() 'Aun no funciona 
+    '    Dim arIndex As ArrayList
+    '    Dim arWpok
+    '    For Each namechapter As String In My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, ".wpok")
+    '        arWpok.Add(IO.Path.GetFileNameWithoutExtension(namechapter))
+    '    Next namechapter
 
-        Dim fileIndex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index")).First
-        Dim fileReader As String = My.Computer.FileSystem.ReadAllText(fileIndex)
-        If fileReader <> "" Then fileReader = fileReader.TrimEnd("|")
-        Dim fileNames() As String = fileReader.Split("|")
-        For chapters As Integer = 0 To fileNames.GetUpperBound(0)
-            arIndex.Add(fileNames(chapters))
-        Next
+    '    Dim fileIndex = My.Computer.FileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index")).First
+    '    Dim fileReader As String = My.Computer.FileSystem.ReadAllText(fileIndex)
+    '    If fileReader <> "" Then fileReader = fileReader.TrimEnd("|")
+    '    Dim fileNames() As String = fileReader.Split("|")
+    '    For chapters As Integer = 0 To fileNames.GetUpperBound(0)
+    '        arIndex.Add(fileNames(chapters))
+    '    Next
 
-        For Each elementIndex As String In arIndex
-            MsgBox(elementIndex)
-            For elementWpok As Integer = 0 To arWpok
-                MsgBox(elementWpok)
-            Next
-        Next
-
-
+    '    For Each elementIndex As String In arIndex
+    '        MsgBox(elementIndex)
+    '        For elementWpok As Integer = 0 To arWpok
+    '            MsgBox(elementWpok)
+    '        Next
+    '    Next
 
 
 
 
-    End Sub
+
+
+    'End Sub
 
 
 End Class
