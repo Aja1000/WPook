@@ -1,0 +1,27 @@
+﻿- Añadir Abrir proyecto en esta ventana o en otra
+
+- En caso de abrirlo en esta ventana ya existente primero cerrar proyecto anterior
+
+- Descubrir sobre tabulaciones y fuentes en Rich Text Box  
+
+- Tool Stip para botones rapidos como tamaño,guardar, etc
+
+- Crear Check box para anexar o sobreescribir al guardado (3 parametro del guardado) [Completado, pero se puede mejorar el diseño]
+  
+- Realizar un Refresco de la cb_capitulos con cada guardado para añadir posibles nuevos capitulos (o añadir boton refresh a parte {posiblemente lo mejor sea ambas opciones}) [Terminado, creo]
+
+- Cambiar nombre de capitulos
+- Reorganizar capitulos
+- Añadir Papelera para borrar capitulos ya inecesarios
+- Importar fichero externo para añadir capitulos
+
+- Crear timer para autoguardado
+
+- Revisar relacion archivo - editor de textos (como se muestra en ambos)
+
+- Si un proyecto no tiene ningun archivo guardado eliminar el proyecto(carpeta) al cerrar el proyecto
+ 
+- Añadir un boton (o pintar el fondo del cb) para que se ponga rojo cada vez que el rtxt cambie y se ponga verde cuando se ejecute un save
+- Para mayor eficiencia comprobar el estado previo del interruptor para evitar estar modificandolo inecesariamente todo el rato
+
+ 
