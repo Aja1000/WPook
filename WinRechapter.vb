@@ -1,9 +1,10 @@
-﻿Public Class WinRechapter
+﻿Imports System.IO
 
+Public Class WinRechapter
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         reloadListChapters()
 
-        Dim numChapter = My.Computer.FileSystem.GetFiles(Form1.proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.wpok").Count
+        Dim numChapter = Form1.fileSystem.GetFiles(Form1.proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.wpok").Count
         nud_rechapters.Maximum = numChapter
         nud_rechapters.Minimum = 1
         nud_rechapters.Enabled = False
@@ -12,13 +13,12 @@
 
     End Sub
     Private Sub lstBox_chapters_SelectedValueChanged(sender As Object, e As EventArgs) Handles lstBox_chapters.SelectedValueChanged
-        Try
+        If lstBox_chapters.SelectedItems.Count() > 0 Then
             txt_rename.Text = lstBox_chapters.SelectedItem.ToString
             nud_rechapters.Value = lstBox_chapters.SelectedIndex + 1
             nud_rechapters.Enabled = True
-        Catch ex As Exception
+        End If
 
-        End Try
     End Sub
     Private Sub btn_upChapter_Click(sender As Object, e As EventArgs) Handles btn_upChapter.Click
         Dim indexChapter As Integer = lstBox_chapters.SelectedIndex
@@ -44,7 +44,7 @@
         Try
             Dim indexChapter As Integer = lstBox_chapters.SelectedIndex
             Dim newName = Trim(txt_rename.Text)
-            My.Computer.FileSystem.RenameFile(Form1.proyectPath & "\" & lstBox_chapters.SelectedItem & ".wpok", newName & ".wpok")
+            Form1.fileSystem.RenameFile(Form1.proyectPath & "\" & lstBox_chapters.SelectedItem & ".wpok", newName & ".wpok")
             lstBox_chapters.Items.RemoveAt(indexChapter)
             lstBox_chapters.Items.Insert(indexChapter, txt_rename.Text)
             reindexingPRO()
@@ -69,7 +69,7 @@
     Private Sub btn_deleteChapter_Click(sender As Object, e As EventArgs) Handles btn_deleteChapter.Click
         Try
             Dim chapter = Form1.proyectPath & "\" & lstBox_chapters.SelectedItem & ".wpok"
-            My.Computer.FileSystem.DeleteFile(chapter)
+            Form1.fileSystem.DeleteFile(chapter)
             lstBox_chapters.Items.RemoveAt(lstBox_chapters.SelectedIndex)
             reindexingPRO()
         Catch ex As Exception
@@ -91,18 +91,18 @@
             Exit Sub
         End If
         Try
-            My.Computer.FileSystem.CopyFile(Form1.proyectPath & "\" & namechapter & ".wpok", ficheroDuplicado)
+            Form1.fileSystem.CopyFile(Form1.proyectPath & "\" & namechapter & ".wpok", ficheroDuplicado)
             lstBox_chapters.Items.Insert(indexChapter + 1, namechapter & "(" & contador & ")")
             reindexingPRO()
             Exit Sub
         Catch ex As Exception
         End Try
 
-        Do While My.Computer.FileSystem.FileExists(ficheroDuplicado)
+        Do While Form1.fileSystem.FileExists(ficheroDuplicado)
             contador += 1
             ficheroDuplicado = Form1.proyectPath & "\" & namechapter & "(" & contador & ").wpok"
             Try
-                My.Computer.FileSystem.CopyFile(Form1.proyectPath & "\" & namechapter & ".wpok", ficheroDuplicado)
+                Form1.fileSystem.CopyFile(Form1.proyectPath & "\" & namechapter & ".wpok", ficheroDuplicado)
                 lstBox_chapters.Items.Insert(indexChapter + contador - 1, namechapter & "(" & contador & ")")
                 reindexingPRO()
                 Exit Do
@@ -118,8 +118,8 @@
         If OpenFileDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
             Dim fileName = OpenFileDialog.FileName
             Try
-                My.Computer.FileSystem.CopyFile(fileName, Form1.proyectPath & "\" & IO.Path.GetFileNameWithoutExtension(fileName) & ".wpok")
-                lstBox_chapters.Items.Insert(lstBox_chapters.Items.Count, IO.Path.GetFileNameWithoutExtension(fileName))
+                Form1.fileSystem.CopyFile(fileName, Form1.proyectPath & "\" & Path.GetFileNameWithoutExtension(fileName) & ".wpok")
+                lstBox_chapters.Items.Insert(lstBox_chapters.Items.Count, Path.GetFileNameWithoutExtension(fileName))
 
             Catch ex As Exception
                 MsgBox("Ya extiste un fichero con este nombre")
@@ -130,8 +130,12 @@
     'Cogemos el archivo *.index y llenamos la listBox
     Private Sub reloadListChapters()
         lstBox_chapters.Items.Clear()
-        Dim fileIndex = My.Computer.FileSystem.GetFiles(Form1.proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.index").First
-        Dim fileReader As String = My.Computer.FileSystem.ReadAllText(fileIndex)
+        Dim indexFile
+        'Dim indexFile = Form1.fileSystem.GetFiles(Form1.proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.index").First
+        For Each indexFile In Form1.fileSystem.GetFiles(Form1.proyectPath, FileIO.SearchOption.SearchAllSubDirectories, "*.index")
+            indexFile = indexFile
+        Next
+        Dim fileReader As String = Form1.fileSystem.ReadAllText(indexFile)
         If fileReader <> "" Then fileReader = fileReader.TrimEnd("|")
         Dim fileNames() As String = fileReader.Split("|")
         For chapters As Integer = 0 To fileNames.GetUpperBound(0)
@@ -146,7 +150,7 @@
         For Each chapter In lstBox_chapters.Items
             index = index & chapter & "|"
         Next
-        My.Computer.FileSystem.WriteAllText(Form1.proyectPath & "\" & Form1.proyectFolder("index"), index, False)
+        Form1.fileSystem.WriteAllText(Form1.proyectPath & "\" & Form1.proyectFolder("index"), index, False) 'AAAAAAAAAAAAACreacion Index
         Form1.reloadChapters()
     End Sub
     Private Sub reindexingPRO()
