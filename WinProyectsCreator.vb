@@ -7,7 +7,8 @@ Public Class WinProyectsCreator
     End Sub
     Private Sub btn_examinar_Click(sender As Object, e As EventArgs) Handles btn_examine.Click
         If FolderBrowser.ShowDialog = Windows.Forms.DialogResult.OK Then
-            txt_Path.Text = FolderBrowser.SelectedPath
+            txt_Path.Text = FolderBrowser.SelectedPath.TrimEnd("\")
+
             btn_create.Select()
         End If
     End Sub

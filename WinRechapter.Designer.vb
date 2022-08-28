@@ -96,7 +96,7 @@ Partial Class WinRechapter
         Me.btn_renameChapter.Name = "btn_renameChapter"
         Me.btn_renameChapter.Size = New System.Drawing.Size(80, 80)
         Me.btn_renameChapter.TabIndex = 7
-        Me.btn_renameChapter.Text = "Renombrar Capitulo"
+        Me.btn_renameChapter.Text = "Renombrar"
         Me.btn_renameChapter.UseVisualStyleBackColor = True
         '
         'btn_duplicate

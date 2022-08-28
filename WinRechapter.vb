@@ -71,6 +71,7 @@ Public Class WinRechapter
             Dim chapter = Form1.proyectPath & "\" & lstBox_chapters.SelectedItem & ".wpok"
             Form1.fileSystem.DeleteFile(chapter)
             lstBox_chapters.Items.RemoveAt(lstBox_chapters.SelectedIndex)
+            nud_rechapters.Maximum -= 1
             reindexingPRO()
         Catch ex As Exception
             MsgBox("Deebes seleccionar el capitulo que quieres borrar")
@@ -93,7 +94,8 @@ Public Class WinRechapter
         Try
             Form1.fileSystem.CopyFile(Form1.proyectPath & "\" & namechapter & ".wpok", ficheroDuplicado)
             lstBox_chapters.Items.Insert(indexChapter + 1, namechapter & "(" & contador & ")")
-            reindexingPRO()
+            reindexing()
+            nud_rechapters.Maximum += 1
             Exit Sub
         Catch ex As Exception
         End Try
@@ -104,7 +106,9 @@ Public Class WinRechapter
             Try
                 Form1.fileSystem.CopyFile(Form1.proyectPath & "\" & namechapter & ".wpok", ficheroDuplicado)
                 lstBox_chapters.Items.Insert(indexChapter + contador - 1, namechapter & "(" & contador & ")")
-                reindexingPRO()
+
+                nud_rechapters.Maximum += 1
+                reindexing()
                 Exit Do
             Catch ex As Exception
             End Try
@@ -120,11 +124,11 @@ Public Class WinRechapter
             Try
                 Form1.fileSystem.CopyFile(fileName, Form1.proyectPath & "\" & Path.GetFileNameWithoutExtension(fileName) & ".wpok")
                 lstBox_chapters.Items.Insert(lstBox_chapters.Items.Count, Path.GetFileNameWithoutExtension(fileName))
-
+                nud_rechapters.Maximum += 1
             Catch ex As Exception
                 MsgBox("Ya extiste un fichero con este nombre")
             End Try
-            reindexing()
+            reindexingPRO()
         End If
     End Sub
     'Cogemos el archivo *.index y llenamos la listBox
