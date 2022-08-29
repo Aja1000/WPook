@@ -280,31 +280,31 @@ Partial Class Form1
         'ContenidoToolStripMenuItem
         '
         Me.ContenidoToolStripMenuItem.Name = "ContenidoToolStripMenuItem"
-        Me.ContenidoToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
+        Me.ContenidoToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ContenidoToolStripMenuItem.Text = "&Contenido"
         '
         'ÍndiceToolStripMenuItem
         '
         Me.ÍndiceToolStripMenuItem.Name = "ÍndiceToolStripMenuItem"
-        Me.ÍndiceToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
+        Me.ÍndiceToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ÍndiceToolStripMenuItem.Text = "Índic&e"
         '
         'BuscarToolStripMenuItem
         '
         Me.BuscarToolStripMenuItem.Name = "BuscarToolStripMenuItem"
-        Me.BuscarToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
+        Me.BuscarToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.BuscarToolStripMenuItem.Text = "&Buscar"
         '
         'toolStripSeparator5
         '
         Me.toolStripSeparator5.Name = "toolStripSeparator5"
-        Me.toolStripSeparator5.Size = New System.Drawing.Size(132, 6)
+        Me.toolStripSeparator5.Size = New System.Drawing.Size(177, 6)
         '
         'AcercadeToolStripMenuItem
         '
         Me.AcercadeToolStripMenuItem.Name = "AcercadeToolStripMenuItem"
-        Me.AcercadeToolStripMenuItem.Size = New System.Drawing.Size(135, 22)
-        Me.AcercadeToolStripMenuItem.Text = "&Acerca de..."
+        Me.AcercadeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AcercadeToolStripMenuItem.Text = "Trello"
         '
         'rtxt_texto
         '

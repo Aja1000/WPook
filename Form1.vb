@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Drawing.Drawing2D
+Imports System.IO
 
 Public Class Form1
     'Esta variable almacena la ruta del proyecto. 
@@ -10,6 +11,8 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'proyecto_blanco()
         closeProyect()
+        tsb_reloadChapters.Enabled = True
+
     End Sub
 
     Private Sub newProyect()
@@ -152,6 +155,7 @@ Public Class Form1
         'Al final este objeto acabara por desaparecer ya que la recarga se hara de forma automatica
         'reloadChapters()
         'filesindex()
+        pruebaBucles()
     End Sub
     Private Sub tsmi_cerrarProyecto_Click(sender As Object, e As EventArgs) Handles tsmi_closeProyecto.Click
         closeProyect()
@@ -211,6 +215,10 @@ Public Class Form1
         Return fileindex
     End Function
 
+    Private Sub AcercadeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AcercadeToolStripMenuItem.Click
+        System.Diagnostics.Process.Start("https://docs.microsoft.com/es-es/dotnet/api/system.windows.vector.equals?view=windowsdesktop-6.0")
+    End Sub
+
     'Public Sub filesindex() 'Aun no funciona 
     '    Dim arIndex As ArrayList
     '    Dim arWpok
@@ -237,5 +245,115 @@ Public Class Form1
     '    Next
 
     'End Sub
+
+    Public Sub pruebaBucles()
+
+        Dim Linea1(3) As String
+        Dim Linea2(4) As String
+        ' Como no sabrás cuantos elementos tendra Linea3, es mejor no
+        ' reservar memoria utilizando un vector, es preferible utilizar un ArrayList e
+        ' ir añadiendole elementos.
+        Dim Linea3 As New ArrayList()
+
+        Dim i As Integer
+        Dim j As Integer
+        Dim esta As Boolean
+
+        Linea1(1) = "ABC"
+        Linea1(2) = "CDE"
+        Linea1(3) = "EFG"
+
+        Linea2(1) = "123"
+        Linea2(2) = "ABC"
+        Linea2(3) = "CDE"
+        Linea2(4) = "CDE"
+
+        Linea3.Add(Linea1(1))
+
+        i = 0
+
+        ' insertamos en Linea3 los elementos no repetidos de Linea1
+
+        While (i < Linea1.Length)
+
+            esta = False
+            j = 0
+
+            While (j < Linea3.Count And Not esta)
+
+                ' vamos comparando cada uno de los elementos del vector Linea1
+                ' con todos los elementos del vector Linea3.
+                ' Si son iguales pasamos al siguiente elemento del vector Linea3
+
+                If (Linea1(i) = Linea3.Item(j)) Then
+
+                    esta = True
+
+                End If
+
+                j = j + 1
+
+            End While
+
+            ' Si el elemento de Linea1 que hemos comparado con todos los elementos
+            ' de Linea3 no ha sido igual a ninguno, tenemos que insertarlo en Linea3
+
+            If Not (esta) Then
+
+                Linea3.Add(Linea1(i))
+            End If
+
+            i = i + 1
+
+        End While
+
+        ' insertamos en Linea3 los elementos no repetidos de Linea2 haciendo
+        ' exactamente lo mismo que antes para Linea1
+
+        ' inicializamos de nuevo la variable i
+
+        i = 1
+
+        While (i < Linea2.Length)
+
+            esta = False
+            j = 0
+
+            While (j < Linea3.Count And Not esta)
+
+                If (Linea2(i) = Linea3.Item(j)) Then
+                    esta = True
+                End If
+
+                j = j + 1
+
+            End While
+
+            If Not (esta) Then
+
+                Linea3.Add(Linea2(i))
+
+            End If
+
+            i = i + 1
+
+        End While
+
+        'Sacamos por pantalla el vector Linea3
+
+        Dim h As Integer
+
+        For h = 0 To Linea3.Count - 1
+
+            MsgBox(Linea3.Item(h))
+
+        Next
+
+        ' Este mensaje lo ponemos para que nos de tiempo a visualizar en la
+        ' consola el resultado del vector Linea3.
+        MsgBox("")
+
+
+    End Sub
 
 End Class

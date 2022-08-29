@@ -22,6 +22,7 @@ Partial Class WinRechapter
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.lstBox_chapters = New System.Windows.Forms.ListBox()
         Me.lbl_listadoCapitulos = New System.Windows.Forms.Label()
         Me.btn_upChapter = New System.Windows.Forms.Button()
@@ -34,7 +35,12 @@ Partial Class WinRechapter
         Me.btn_deleteChapter = New System.Windows.Forms.Button()
         Me.btn_import = New System.Windows.Forms.Button()
         Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.UPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BajarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EliminarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.nud_rechapters, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ContextMenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'lstBox_chapters
@@ -140,6 +146,31 @@ Partial Class WinRechapter
         Me.OpenFileDialog.RestoreDirectory = True
         Me.OpenFileDialog.Title = "Importar Capitulos"
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UPToolStripMenuItem, Me.BajarToolStripMenuItem, Me.EliminarToolStripMenuItem})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(130, 70)
+        '
+        'UPToolStripMenuItem
+        '
+        Me.UPToolStripMenuItem.Name = "UPToolStripMenuItem"
+        Me.UPToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
+        Me.UPToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+        Me.UPToolStripMenuItem.Text = "UP"
+        '
+        'BajarToolStripMenuItem
+        '
+        Me.BajarToolStripMenuItem.Name = "BajarToolStripMenuItem"
+        Me.BajarToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+        Me.BajarToolStripMenuItem.Text = "Bajar"
+        '
+        'EliminarToolStripMenuItem
+        '
+        Me.EliminarToolStripMenuItem.Name = "EliminarToolStripMenuItem"
+        Me.EliminarToolStripMenuItem.Size = New System.Drawing.Size(129, 22)
+        Me.EliminarToolStripMenuItem.Text = "Eliminar"
+        '
         'WinRechapter
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -161,6 +192,7 @@ Partial Class WinRechapter
         Me.Name = "WinRechapter"
         Me.Text = "Recapitulador - WPook"
         CType(Me.nud_rechapters, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ContextMenuStrip1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -182,4 +214,8 @@ Partial Class WinRechapter
     Friend WithEvents btn_deleteChapter As Button
     Friend WithEvents btn_import As Button
     Friend WithEvents OpenFileDialog As OpenFileDialog
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents UPToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents BajarToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EliminarToolStripMenuItem As ToolStripMenuItem
 End Class
