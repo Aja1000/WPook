@@ -1,26 +1,29 @@
-﻿Public Class WinProyectsCreator
+﻿Imports System.IO
+
+Public Class WinProyectsCreator
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Form1.Enabled = False
         ControlBox = False
     End Sub
     Private Sub btn_examinar_Click(sender As Object, e As EventArgs) Handles btn_examine.Click
         If FolderBrowser.ShowDialog = Windows.Forms.DialogResult.OK Then
-            txt_path.Text = FolderBrowser.SelectedPath
+            txt_Path.Text = FolderBrowser.SelectedPath.TrimEnd("\")
+
             btn_create.Select()
         End If
     End Sub
     Private Sub btn_crear_Click(sender As Object, e As EventArgs) Handles btn_create.Click
         Dim nameProyect As String = Trim(txt_nameProyect.Text)
         With Form1
-            If txt_nameProyect.Text <> "" AndAlso System.IO.Directory.Exists(txt_path.Text) Then
-                Form1.proyectPath = Trim(txt_Path.Text & "\" & nameProyect)
-                If Not (System.IO.Directory.Exists(Form1.proyectPath)) Then
-                    My.Computer.FileSystem.CreateDirectory(Form1.proyectPath)
+            If txt_nameProyect.Text <> "" AndAlso Directory.Exists(txt_Path.Text) Then
+                .proyectPath = Trim(txt_Path.Text & "\" & nameProyect)
+                If Not (Directory.Exists(Form1.proyectPath)) Then
+                    .fileSystem.CreateDirectory(Form1.proyectPath)
                     ' Una vez creada la carpeta sustiuimos espacios por barra_bajas para dejar el archivo index sin espacios
                     nameProyect = nameProyect.Replace(" ", "_")
-                    My.Computer.FileSystem.WriteAllText(Form1.proyectPath & "\" & nameProyect & ".index", "", False)
-
-                    .Text = IO.Path.GetFileName(Form1.proyectPath) & " - WPook"
+                    'Console.WriteLine(Form1.proyectPath & "\" & nameProyect & ".index", "", False)
+                    Form1.fileSystem.WriteAllText(Form1.proyectPath & "\" & nameProyect & ".index", "", False) 'AAAAAAAAAAAAACreacion Index
+                    .Text = Path.GetFileName(Form1.proyectPath) & " - WPook"
                     .Enabled = True
                     .rtxt_texto.Enabled = True
                     .tscb_chapters.Enabled = True
