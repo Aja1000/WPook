@@ -106,7 +106,6 @@ Public Class WinRechapter
             Try
                 Form1.fileSystem.CopyFile(Form1.proyectPath & "\" & namechapter & ".wpok", ficheroDuplicado)
                 lstBox_chapters.Items.Insert(indexChapter + contador - 1, namechapter & "(" & contador & ")")
-
                 nud_rechapters.Maximum += 1
                 reindexing()
                 Exit Do
@@ -164,4 +163,14 @@ Public Class WinRechapter
         nud_rechapters.Enabled = False
     End Sub
 
+    Private Sub UPToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UPToolStripMenuItem.Click
+        Dim indexChapter As Integer = lstBox_chapters.SelectedIndex
+        Dim namechapter As String = lstBox_chapters.SelectedItem.ToString()
+        If indexChapter > 0 Then
+            lstBox_chapters.Items.RemoveAt(indexChapter)
+            lstBox_chapters.Items.Insert(indexChapter - 1, namechapter)
+            lstBox_chapters.SetSelected(indexChapter - 1, True)
+        End If
+        reindexing()
+    End Sub
 End Class
