@@ -1,11 +1,7 @@
 ﻿- Añadir Abrir proyecto en esta ventana o en otra 
 - En caso de abrirlo en esta ventana ya existente primero cerrar proyecto anterior
+
 - Descubrir sobre tabulaciones y fuentes en Rich Text Box  
 - Tool Stip para botones rapidos como tamaño,guardar, etc
-- Crear timer para autoguardado
 - Revisar relacion archivo - editor de textos (como se muestra en ambos)
 - Si un proyecto no tiene ningun archivo guardado eliminar el proyecto(carpeta) al cerrar el proyecto
-- Añadir un boton (o pintar el fondo del cb) para que se ponga rojo cada vez que el rtxt cambie y se ponga verde cuando se ejecute un save
-- Para mayor eficiencia comprobar el estado previo del interruptor para evitar estar modificandolo inecesariamente todo el rato
-
- 

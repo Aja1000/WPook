@@ -22,6 +22,7 @@ Partial Class Form1
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.MainMenu = New System.Windows.Forms.MenuStrip()
         Me.ArchivoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -56,7 +57,7 @@ Partial Class Form1
         Me.ÍndiceToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BuscarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
-        Me.AcercadeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.tsmi_Trello = New System.Windows.Forms.ToolStripMenuItem()
         Me.rtxt_texto = New System.Windows.Forms.RichTextBox()
         Me.FolderBrowser = New System.Windows.Forms.FolderBrowserDialog()
         Me.Shotcuts = New System.Windows.Forms.ToolStrip()
@@ -67,6 +68,8 @@ Partial Class Form1
         Me.tscb_chapters = New System.Windows.Forms.ToolStripComboBox()
         Me.tslbl_Chapters = New System.Windows.Forms.ToolStripLabel()
         Me.SaveFile = New System.Windows.Forms.SaveFileDialog()
+        Me.lbl_nPalabras = New System.Windows.Forms.Label()
+        Me.AutoSave = New System.Windows.Forms.Timer(Me.components)
         Me.MainMenu.SuspendLayout()
         Me.Shotcuts.SuspendLayout()
         Me.SuspendLayout()
@@ -77,7 +80,7 @@ Partial Class Form1
         Me.MainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ArchivoToolStripMenuItem, Me.EditarToolStripMenuItem, Me.HerramientasToolStripMenuItem, Me.AyudaToolStripMenuItem})
         Me.MainMenu.Location = New System.Drawing.Point(0, 0)
         Me.MainMenu.Name = "MainMenu"
-        Me.MainMenu.Size = New System.Drawing.Size(800, 24)
+        Me.MainMenu.Size = New System.Drawing.Size(978, 24)
         Me.MainMenu.TabIndex = 0
         Me.MainMenu.Text = "MenuStrip1"
         '
@@ -272,7 +275,7 @@ Partial Class Form1
         '
         'AyudaToolStripMenuItem
         '
-        Me.AyudaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContenidoToolStripMenuItem, Me.ÍndiceToolStripMenuItem, Me.BuscarToolStripMenuItem, Me.toolStripSeparator5, Me.AcercadeToolStripMenuItem})
+        Me.AyudaToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContenidoToolStripMenuItem, Me.ÍndiceToolStripMenuItem, Me.BuscarToolStripMenuItem, Me.toolStripSeparator5, Me.tsmi_Trello})
         Me.AyudaToolStripMenuItem.Name = "AyudaToolStripMenuItem"
         Me.AyudaToolStripMenuItem.Size = New System.Drawing.Size(53, 20)
         Me.AyudaToolStripMenuItem.Text = "Ay&uda"
@@ -280,31 +283,31 @@ Partial Class Form1
         'ContenidoToolStripMenuItem
         '
         Me.ContenidoToolStripMenuItem.Name = "ContenidoToolStripMenuItem"
-        Me.ContenidoToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ContenidoToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.ContenidoToolStripMenuItem.Text = "&Contenido"
         '
         'ÍndiceToolStripMenuItem
         '
         Me.ÍndiceToolStripMenuItem.Name = "ÍndiceToolStripMenuItem"
-        Me.ÍndiceToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ÍndiceToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.ÍndiceToolStripMenuItem.Text = "Índic&e"
         '
         'BuscarToolStripMenuItem
         '
         Me.BuscarToolStripMenuItem.Name = "BuscarToolStripMenuItem"
-        Me.BuscarToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.BuscarToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.BuscarToolStripMenuItem.Text = "&Buscar"
         '
         'toolStripSeparator5
         '
         Me.toolStripSeparator5.Name = "toolStripSeparator5"
-        Me.toolStripSeparator5.Size = New System.Drawing.Size(177, 6)
+        Me.toolStripSeparator5.Size = New System.Drawing.Size(127, 6)
         '
-        'AcercadeToolStripMenuItem
+        'tsmi_Trello
         '
-        Me.AcercadeToolStripMenuItem.Name = "AcercadeToolStripMenuItem"
-        Me.AcercadeToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.AcercadeToolStripMenuItem.Text = "Trello"
+        Me.tsmi_Trello.Name = "tsmi_Trello"
+        Me.tsmi_Trello.Size = New System.Drawing.Size(130, 22)
+        Me.tsmi_Trello.Text = "Trello"
         '
         'rtxt_texto
         '
@@ -314,7 +317,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.rtxt_texto.Location = New System.Drawing.Point(12, 56)
         Me.rtxt_texto.Name = "rtxt_texto"
-        Me.rtxt_texto.Size = New System.Drawing.Size(776, 382)
+        Me.rtxt_texto.Size = New System.Drawing.Size(954, 431)
         Me.rtxt_texto.TabIndex = 1
         Me.rtxt_texto.Text = ""
         '
@@ -328,7 +331,7 @@ Partial Class Form1
         Me.Shotcuts.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_new, Me.tsb_open, Me.tsb_reloadChapters, Me.tsb_rechapter, Me.tscb_chapters, Me.tslbl_Chapters})
         Me.Shotcuts.Location = New System.Drawing.Point(0, 24)
         Me.Shotcuts.Name = "Shotcuts"
-        Me.Shotcuts.Size = New System.Drawing.Size(800, 25)
+        Me.Shotcuts.Size = New System.Drawing.Size(978, 25)
         Me.Shotcuts.TabIndex = 2
         Me.Shotcuts.Text = "ToolStrip1"
         '
@@ -384,15 +387,31 @@ Partial Class Form1
         Me.tslbl_Chapters.Size = New System.Drawing.Size(60, 22)
         Me.tslbl_Chapters.Text = "Capitulos:"
         '
+        'lbl_nPalabras
+        '
+        Me.lbl_nPalabras.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lbl_nPalabras.AutoSize = True
+        Me.lbl_nPalabras.Location = New System.Drawing.Point(12, 489)
+        Me.lbl_nPalabras.Name = "lbl_nPalabras"
+        Me.lbl_nPalabras.Size = New System.Drawing.Size(0, 13)
+        Me.lbl_nPalabras.TabIndex = 3
+        '
+        'AutoSave
+        '
+        Me.AutoSave.Enabled = True
+        Me.AutoSave.Interval = 600000
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(978, 504)
+        Me.Controls.Add(Me.lbl_nPalabras)
         Me.Controls.Add(Me.rtxt_texto)
         Me.Controls.Add(Me.Shotcuts)
         Me.Controls.Add(Me.MainMenu)
         Me.MainMenuStrip = Me.MainMenu
+        Me.MinimumSize = New System.Drawing.Size(450, 250)
         Me.Name = "Form1"
         Me.Text = "WPook"
         Me.MainMenu.ResumeLayout(False)
@@ -432,7 +451,7 @@ Partial Class Form1
     Friend WithEvents ÍndiceToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BuscarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents toolStripSeparator5 As ToolStripSeparator
-    Friend WithEvents AcercadeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents tsmi_Trello As ToolStripMenuItem
     Friend WithEvents FolderBrowser As FolderBrowserDialog
     Friend WithEvents Shotcuts As ToolStrip
     Friend WithEvents tsmi_closeProyecto As ToolStripMenuItem
@@ -448,4 +467,6 @@ Partial Class Form1
     Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
     Friend WithEvents SaveFile As SaveFileDialog
     Friend WithEvents tsmi_reindexing As ToolStripMenuItem
+    Friend WithEvents lbl_nPalabras As Label
+    Public WithEvents AutoSave As Timer
 End Class

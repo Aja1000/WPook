@@ -8,7 +8,6 @@ Public Class WinRechapter
         nud_rechapters.Maximum = numChapter
         nud_rechapters.Minimum = 1
         nud_rechapters.Enabled = False
-
         Form1.Enabled = False
 
     End Sub
@@ -18,7 +17,6 @@ Public Class WinRechapter
             nud_rechapters.Value = lstBox_chapters.SelectedIndex + 1
             nud_rechapters.Enabled = True
         End If
-
     End Sub
     Private Sub btn_upChapter_Click(sender As Object, e As EventArgs) Handles btn_upChapter.Click
         Dim indexChapter As Integer = lstBox_chapters.SelectedIndex
@@ -51,7 +49,6 @@ Public Class WinRechapter
         Catch ex As Exception
             MsgBox("Deebes seleccionar el capitulo que quieres renombrar y no dejar el campo vacio")
         End Try
-
     End Sub
     Private Sub btn_Rechapter_Click(sender As Object, e As EventArgs) Handles btn_rechapter.Click
         Try
@@ -112,9 +109,7 @@ Public Class WinRechapter
             Catch ex As Exception
             End Try
         Loop
-
     End Sub
-
     Private Sub btn_import_Click(sender As Object, e As EventArgs) Handles btn_import.Click
         OpenFileDialog.Filter = "Archivos de Texto (*.wpok*)|*.wpok| Archivos de Texto (*.txt)|(*.txt)"
         OpenFileDialog.FileName = ""
@@ -146,7 +141,6 @@ Public Class WinRechapter
         Next
         lstBox_chapters.ClearSelected()
     End Sub
-
     'Tomamos lo elementos del lstBox_chapters y los añadimos en el archivo*.index en el mismo orden
     Private Sub reindexing()
         Dim index
@@ -162,7 +156,6 @@ Public Class WinRechapter
         txt_rename.Text = ""
         nud_rechapters.Enabled = False
     End Sub
-
     Private Sub UPToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UPToolStripMenuItem.Click
         Dim indexChapter As Integer = lstBox_chapters.SelectedIndex
         Dim namechapter As String = lstBox_chapters.SelectedItem.ToString()

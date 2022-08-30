@@ -8,13 +8,14 @@ Public Class Form1
     Public proyectPath As String
     Public fileSystem = My.Computer.FileSystem
 
+    'pa22pu@gmail.com//P!k0lo99 Trello
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'proyecto_blanco()
         closeProyect()
-        tsb_reloadChapters.Enabled = True
+        tsb_reloadChapters.Enabled = True ' Borrar al terminar las pruebas
+        Me.WindowState = FormWindowState.Maximized
 
     End Sub
-
     Private Sub newProyect()
         WinProyectsCreator.Show()
     End Sub
@@ -29,6 +30,7 @@ Public Class Form1
             tsb_reloadChapters.Enabled = True
             tsb_rechapter.Enabled = True
             tsmi_reindexing.Enabled = True
+            tscb_chapters.BackColor = Color.White
         End If
 
     End Sub
@@ -43,7 +45,13 @@ Public Class Form1
         tsb_reloadChapters.Enabled = False
         tsb_rechapter.Enabled = False
         tsmi_reindexing.Enabled = False
+        tscb_chapters.BackColor = Form.DefaultBackColor
+        lbl_nPalabras.Text = ""
 
+    End Sub
+    Private Sub rtxt_texto_TextChanged(sender As Object, e As EventArgs) Handles rtxt_texto.TextChanged
+        WordCount()
+        tscb_chapters.BackColor = Color.Red
     End Sub
     Public Sub reloadChapters()
         tscb_chapters.Items.Clear()
@@ -64,13 +72,10 @@ Public Class Form1
             fileSystem.WriteAllText(proyectPath & "\" & proyectFolder("index"), index, False) 'AAAAAAAAAAAAACreacion Index
             indexfiles = fileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index"))
         End Try
-
         Dim fileReader As String = ""
-
         For Each indexfile In indexfiles
             fileReader = fileSystem.ReadAllText(indexfile)
         Next
-
         If fileReader <> "" Then
             fileReader = fileReader.TrimEnd("|")
             Dim fileNames() As String = fileReader.Split("|")
@@ -87,12 +92,12 @@ Public Class Form1
         ' El metodo nuevo falla si metes un archivo a mano que no este en el index. Parcialmente solucionado pero se puede mejorar
 
     End Sub
-
     Public Sub save()
         If Directory.Exists(proyectPath) Then
             If tscb_chapters.SelectedItem <> "Nuevo Capitulo" Then 'GUARDAR
                 Dim archivo As String = proyectPath & "\" & tscb_chapters.SelectedItem & ".wpok"
                 fileSystem.WriteAllText(archivo, rtxt_texto.Text, False)
+                tscb_chapters.BackColor = Color.White
                 MsgBox("Archivo guardado correctamente")
 
             Else 'GUARDAR COMO -> Nuevo Capitulo
@@ -143,6 +148,12 @@ Public Class Form1
     Private Sub tsb_reOrderChapter_Click(sender As Object, e As EventArgs) Handles tsb_rechapter.Click
         WinRechapter.Show()
     End Sub
+    Private Sub tsb_refrescarCapitulos_Click(sender As Object, e As EventArgs) Handles tsb_reloadChapters.Click
+        'Al final este objeto acabara por desaparecer ya que la recarga se hara de forma automatica
+        'reloadChapters()
+        'filesindex()
+        pruebaBucles()
+    End Sub
     Private Sub tsmi_deleteProyect_Click(sender As Object, e As EventArgs) Handles tsmi_deleteProyect.Click
         fileSystem.DeleteDirectory(proyectPath,
             FileIO.UIOption.AllDialogs,
@@ -150,12 +161,6 @@ Public Class Form1
             FileIO.UICancelOption.ThrowException)
 
         closeProyect()
-    End Sub
-    Private Sub tsb_refrescarCapitulos_Click(sender As Object, e As EventArgs) Handles tsb_reloadChapters.Click
-        'Al final este objeto acabara por desaparecer ya que la recarga se hara de forma automatica
-        'reloadChapters()
-        'filesindex()
-        pruebaBucles()
     End Sub
     Private Sub tsmi_cerrarProyecto_Click(sender As Object, e As EventArgs) Handles tsmi_closeProyecto.Click
         closeProyect()
@@ -166,13 +171,28 @@ Public Class Form1
     Private Sub tsmi_reindexing_Click(sender As Object, e As EventArgs) Handles tsmi_reindexing.Click
         WinRechapter.Show()
     End Sub
-    'Private Sub rtxt_texto_LostFocusClick(sender As Object, e As EventArgs) Handles rtxt_texto.LostFocus
-    '    If tscb_chapters.SelectedItem = "Nuevo Capitulo" Then save()
-    'End Sub
-
-    'Private Sub rtxt_texto_Click(sender As Object, e As EventArgs) Handles rtxt_texto.Click
-    '    If tscb_chapters.SelectedItem = "Nuevo Capitulo" Then save()
-    'End Sub
+    Private Sub tmsi_copiar_Click(sender As Object, e As EventArgs) Handles tmsi_copiar.Click
+        rtxt_texto.Copy()
+    End Sub
+    Private Sub tmsi_cortar_Click(sender As Object, e As EventArgs) Handles tmsi_cortar.Click
+        rtxt_texto.Cut()
+    End Sub
+    Private Sub tmsi_pegar_Click(sender As Object, e As EventArgs) Handles tmsi_pegar.Click
+        rtxt_texto.Paste()
+    End Sub
+    Private Sub tsmi_deshacer_Click(sender As Object, e As EventArgs) Handles tsmi_deshacer.Click
+        rtxt_texto.Undo()
+    End Sub
+    Private Sub tsmi_rehacer_Click(sender As Object, e As EventArgs) Handles tsmi_rehacer.Click
+        rtxt_texto.Redo()
+    End Sub
+    Private Sub tsmi_Trello_Click(sender As Object, e As EventArgs) Handles tsmi_Trello.Click
+        System.Diagnostics.Process.Start("https://trello.com/b/Sf3Letyl/wpook")
+    End Sub
+    Private Sub AutoSave_Tick(sender As Object, e As EventArgs) Handles AutoSave.Tick
+        '300 000 5 mins
+        save()
+    End Sub
     Private Sub cb_capitulos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tscb_chapters.SelectedIndexChanged
         If tscb_chapters.SelectedItem = "Nuevo Capitulo" Then
             rtxt_texto.Text = ""
@@ -181,28 +201,13 @@ Public Class Form1
             rtxt_texto.Text = fileReader
         End If
         rtxt_texto.Select()
-    End Sub
-    Private Sub CopiarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles tmsi_copiar.Click
-        rtxt_texto.Copy()
-    End Sub
-    Private Sub CortarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles tmsi_cortar.Click
-        rtxt_texto.Cut()
-    End Sub
-    Private Sub PegarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles tmsi_pegar.Click
-        rtxt_texto.Paste()
-    End Sub
-    Private Sub DeshacerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles tsmi_deshacer.Click
-        rtxt_texto.Undo()
-    End Sub
-    Private Sub RehacerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles tsmi_rehacer.Click
-        rtxt_texto.Redo()
+        tscb_chapters.BackColor = Color.White
     End Sub
     Private Sub proyecto_blanco()
         Me.Text = "Nuevo Proyecto - WPook"
         tscb_chapters.Items.Add("Nuevo Capitulo")
         tscb_chapters.SelectedIndex = 0
     End Sub
-
     Public Function proyectFolder(Optional ByVal index As String = "index")
         Dim fileindex
         If index = "index" Then
@@ -214,146 +219,97 @@ Public Class Form1
         End If
         Return fileindex
     End Function
-
-    Private Sub AcercadeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AcercadeToolStripMenuItem.Click
-        System.Diagnostics.Process.Start("https://docs.microsoft.com/es-es/dotnet/api/system.windows.vector.equals?view=windowsdesktop-6.0")
+    Private Sub WordCount()
+        'If rtxt_texto.Text <> "" Then
+        ' lbl_nPalabras.Text = ""
+        'Else
+        Dim cuenta_palabras = Split(rtxt_texto.Text, " ")
+        Dim npalabras As Integer = UBound(cuenta_palabras) + 1
+        lbl_nPalabras.Text = "Conteo: " & npalabras & " palabras y " & Len(rtxt_texto.Text) & " caracteres"
+        ' End If
     End Sub
+    Public Sub pruebaBucles()  'Aun no funciona 
+        'Dim arIndex As ArrayList
+        'Dim indexFile
+        'Dim arProyect As ArrayList
+        'For Each namechapter As String In fileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, ".wpok")
+        '       MsgBox(namechapter)
+        '      arIndex.Add(Path.GetFileNameWithoutExtension(namechapter))
+        'Next namechapter
+        '
+        'For Each indexFile In fileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index"))
+        '       indexFile = fileSystem.ReadAllText(indexFile)
+        'Next
+        'If indexFile <> "" Then indexFile = indexFile.TrimEnd("|")
+        ''Dim fileNames() As String = indexFile.Split("|")
+        ''fileNames.ToList
+        'For Each chapters In indexFile.Split("|")
+        '       MsgBox(chapters)
+        '      arProyect.Add("Ideas")
+        '     MsgBox("Prueba")
+        '    Next
 
-    'Public Sub filesindex() 'Aun no funciona 
-    '    Dim arIndex As ArrayList
-    '    Dim arWpok
-    '    For Each namechapter As String In fileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, ".wpok")
-    '        arWpok.Add(Path.GetFileNameWithoutExtension(namechapter))
-    '    Next namechapter
+        '    Dim DirectorioProyecto As String
+        '    Dim Linea3 As New ArrayList()
+        '    Dim i As Integer
+        '    Dim j As Integer
+        '    Dim esta As Boolean
 
-    '    Dim fileIndex = fileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index")).First
-    '    For Each indexfile In fileSystem.GetFiles(proyectPath, FileIO.SearchOption.SearchAllSubDirectories, proyectFolder("index"))
-    '    indexfile = indexfile
-    '    Next
-    '    Dim fileReader As String = fileSystem.ReadAllText(fileIndex)
-    '    If fileReader <> "" Then fileReader = fileReader.TrimEnd("|")
-    '    Dim fileNames() As String = fileReader.Split("|")
-    '    For chapters As Integer = 0 To fileNames.GetUpperBound(0)
-    '        arIndex.Add(fileNames(chapters))
-    '    Next
-
-    '    For Each elementIndex As String In arIndex
-    '        MsgBox(elementIndex)
-    '        For elementWpok As Integer = 0 To arWpok
-    '            MsgBox(elementWpok)
-    '        Next
-    '    Next
-
-    'End Sub
-
-    Public Sub pruebaBucles()
-
-        Dim Linea1(3) As String
-        Dim Linea2(4) As String
-        ' Como no sabrás cuantos elementos tendra Linea3, es mejor no
-        ' reservar memoria utilizando un vector, es preferible utilizar un ArrayList e
-        ' ir añadiendole elementos.
-        Dim Linea3 As New ArrayList()
-
-        Dim i As Integer
-        Dim j As Integer
-        Dim esta As Boolean
-
-        Linea1(1) = "ABC"
-        Linea1(2) = "CDE"
-        Linea1(3) = "EFG"
-
-        Linea2(1) = "123"
-        Linea2(2) = "ABC"
-        Linea2(3) = "CDE"
-        Linea2(4) = "CDE"
-
-        Linea3.Add(Linea1(1))
-
-        i = 0
-
-        ' insertamos en Linea3 los elementos no repetidos de Linea1
-
-        While (i < Linea1.Length)
-
-            esta = False
-            j = 0
-
-            While (j < Linea3.Count And Not esta)
-
-                ' vamos comparando cada uno de los elementos del vector Linea1
-                ' con todos los elementos del vector Linea3.
-                ' Si son iguales pasamos al siguiente elemento del vector Linea3
-
-                If (Linea1(i) = Linea3.Item(j)) Then
-
-                    esta = True
-
-                End If
-
-                j = j + 1
-
-            End While
-
-            ' Si el elemento de Linea1 que hemos comparado con todos los elementos
-            ' de Linea3 no ha sido igual a ninguno, tenemos que insertarlo en Linea3
-
-            If Not (esta) Then
-
-                Linea3.Add(Linea1(i))
-            End If
-
-            i = i + 1
-
-        End While
-
-        ' insertamos en Linea3 los elementos no repetidos de Linea2 haciendo
-        ' exactamente lo mismo que antes para Linea1
-
-        ' inicializamos de nuevo la variable i
-
-        i = 1
-
-        While (i < Linea2.Length)
-
-            esta = False
-            j = 0
-
-            While (j < Linea3.Count And Not esta)
-
-                If (Linea2(i) = Linea3.Item(j)) Then
-                    esta = True
-                End If
-
-                j = j + 1
-
-            End While
-
-            If Not (esta) Then
-
-                Linea3.Add(Linea2(i))
-
-            End If
-
-            i = i + 1
-
-        End While
-
-        'Sacamos por pantalla el vector Linea3
-
-        Dim h As Integer
-
-        For h = 0 To Linea3.Count - 1
-
-            MsgBox(Linea3.Item(h))
-
-        Next
-
-        ' Este mensaje lo ponemos para que nos de tiempo a visualizar en la
-        ' consola el resultado del vector Linea3.
-        MsgBox("")
-
-
+        '    Linea1(1) = "ABC"
+        '    Linea1(2) = "CDE"
+        '    Linea1(3) = "EFG"
+        '    Linea2(1) = "123"
+        '    Linea2(2) = "ABC"
+        '    Linea2(3) = "CDE"
+        '    Linea2(4) = "CDE"
+        '    Linea3.Add(Linea1(1))
+        '    i = 0
+        '    ' insertamos en Linea3 los elementos no repetidos de Linea1
+        '    While (i < Linea1.Length)
+        '        esta = False
+        '        j = 0
+        '        While (j < Linea3.Count And Not esta)
+        '            ' vamos comparando cada uno de los elementos del vector Linea1
+        '            ' con todos los elementos del vector Linea3.
+        '            ' Si son iguales pasamos al siguiente elemento del vector Linea3
+        '            If (Linea1(i) = Linea3.Item(j)) Then
+        '                esta = True
+        '            End If
+        '            j = j + 1
+        '        End While
+        '        ' Si el elemento de Linea1 que hemos comparado con todos los elementos
+        '        ' de Linea3 no ha sido igual a ninguno, tenemos que insertarlo en Linea3
+        '        If Not (esta) Then
+        '            Linea3.Add(Linea1(i))
+        '        End If
+        '        i = i + 1
+        '    End While
+        '    ' insertamos en Linea3 los elementos no repetidos de Linea2 haciendo
+        '    ' exactamente lo mismo que antes para Linea1
+        '    ' inicializamos de nuevo la variable i
+        '    i = 1
+        '    While (i < Linea2.Length)
+        '        esta = False
+        '        j = 0
+        '        While (j < Linea3.Count And Not esta)
+        '            If (Linea2(i) = Linea3.Item(j)) Then
+        '                esta = True
+        '            End If
+        '            j = j + 1
+        '        End While
+        '        If Not (esta) Then
+        '            Linea3.Add(Linea2(i))
+        '        End If
+        '        i = i + 1
+        '    End While
+        '    'Sacamos por pantalla el vector Linea3
+        '    Dim h As Integer
+        '    For h = 0 To Linea3.Count - 1
+        '        MsgBox(Linea3.Item(h))
+        '    Next
+        '    ' Este mensaje lo ponemos para que nos de tiempo a visualizar en la
+        '    ' consola el resultado del vector Linea3.
+        '    MsgBox("")
     End Sub
 
 End Class
