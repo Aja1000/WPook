@@ -70,6 +70,7 @@ Partial Class Form1
         Me.SaveFile = New System.Windows.Forms.SaveFileDialog()
         Me.lbl_nPalabras = New System.Windows.Forms.Label()
         Me.AutoSave = New System.Windows.Forms.Timer(Me.components)
+        Me.tsb_save = New System.Windows.Forms.ToolStripButton()
         Me.MainMenu.SuspendLayout()
         Me.Shotcuts.SuspendLayout()
         Me.SuspendLayout()
@@ -328,7 +329,7 @@ Partial Class Form1
         'Shotcuts
         '
         Me.Shotcuts.BackColor = System.Drawing.SystemColors.Menu
-        Me.Shotcuts.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_new, Me.tsb_open, Me.tsb_reloadChapters, Me.tsb_rechapter, Me.tscb_chapters, Me.tslbl_Chapters})
+        Me.Shotcuts.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_new, Me.tsb_open, Me.tsb_save, Me.tsb_reloadChapters, Me.tsb_rechapter, Me.tscb_chapters, Me.tslbl_Chapters})
         Me.Shotcuts.Location = New System.Drawing.Point(0, 24)
         Me.Shotcuts.Name = "Shotcuts"
         Me.Shotcuts.Size = New System.Drawing.Size(978, 25)
@@ -401,6 +402,15 @@ Partial Class Form1
         Me.AutoSave.Enabled = True
         Me.AutoSave.Interval = 600000
         '
+        'tsb_save
+        '
+        Me.tsb_save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsb_save.Image = CType(resources.GetObject("tsb_save.Image"), System.Drawing.Image)
+        Me.tsb_save.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_save.Name = "tsb_save"
+        Me.tsb_save.Size = New System.Drawing.Size(23, 22)
+        Me.tsb_save.Text = "Guardar"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -469,4 +479,5 @@ Partial Class Form1
     Friend WithEvents tsmi_reindexing As ToolStripMenuItem
     Friend WithEvents lbl_nPalabras As Label
     Public WithEvents AutoSave As Timer
+    Friend WithEvents tsb_save As ToolStripButton
 End Class

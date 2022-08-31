@@ -119,6 +119,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="WinProyectsCreator.resx">
+      <DependentUpon>WinProyectsCreator.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WinRechapter.resx">
       <DependentUpon>WinRechapter.vb</DependentUpon>
     </EmbeddedResource>

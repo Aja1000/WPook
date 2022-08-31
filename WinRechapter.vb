@@ -47,7 +47,7 @@ Public Class WinRechapter
             lstBox_chapters.Items.Insert(indexChapter, txt_rename.Text)
             reindexingPRO()
         Catch ex As Exception
-            MsgBox("Deebes seleccionar el capitulo que quieres renombrar y no dejar el campo vacio")
+            MsgBox("Debes seleccionar el capitulo que quieres renombrar y no dejar el campo vacio")
         End Try
     End Sub
     Private Sub btn_Rechapter_Click(sender As Object, e As EventArgs) Handles btn_rechapter.Click

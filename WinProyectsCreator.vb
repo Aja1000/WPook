@@ -4,6 +4,7 @@ Public Class WinProyectsCreator
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Form1.Enabled = False
         ControlBox = False
+        txt_Path.BackColor = Color.White
     End Sub
     Private Sub txt_nameProyect_TextChanged(sender As Object, e As EventArgs) Handles txt_nameProyect.TextChanged
         If txt_Path.Text <> "" Then txt_Path.Text = Trim(pathProyect & "\" & txt_nameProyect.Text)
@@ -21,6 +22,7 @@ Public Class WinProyectsCreator
     Private Sub btn_crear_Click(sender As Object, e As EventArgs) Handles btn_create.Click
         Dim nameProyect As String = Trim(txt_nameProyect.Text)
         With Form1
+            MsgBox(pathProyect)
             If nameProyect <> "" AndAlso Directory.Exists(pathProyect) Then
                 .proyectPath = Trim(txt_Path.Text & "\" & nameProyect)
                 If Not (Directory.Exists(.proyectPath)) Then
@@ -38,13 +40,13 @@ Public Class WinProyectsCreator
                     .tsb_rechapter.Enabled = True
                     Me.Close()
                 Else
-                    MsgBox("Ya existe este proyecto con este nombre")
+                    MsgBox("El proyecto " & pathProyect & " ya existe.", MsgBoxStyle.OkOnly, "Proyecto Existente")
                 End If
             Else
                 If nameProyect = "" Then
-                    MsgBox("Este proyecto necesita un nombre")
-                Else
-                    MsgBox("No existe esta ruta")
+                    MsgBox("El proyecto necesita un nombre.", MsgBoxStyle.OkOnly, "Nombre Proyecto")
+                ElseIf txt_Path.Text = "" Then
+                    MsgBox("Necesitamos una ruta en la que alojar el proyecto", MsgBoxStyle.OkOnly, "Ruta Vacia")
                 End If
             End If
         End With

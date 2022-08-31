@@ -7,19 +7,22 @@ Public Class Form1
     'Ej: C:\Users\PabloAja1000\Documents\Libros\ProyectoWPook
     Public proyectPath As String
     Public fileSystem = My.Computer.FileSystem
-
+    Public originalPath As String
     'pa22pu@gmail.com//P!k0lo99 Trello
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'proyecto_blanco()
         closeProyect()
         tsb_reloadChapters.Enabled = True ' Borrar al terminar las pruebas
         Me.WindowState = FormWindowState.Maximized
+        'AutoSave.Interval = 10000
 
     End Sub
     Private Sub newProyect()
+        saveAndClose()
         WinProyectsCreator.Show()
     End Sub
     Public Sub openProyect()
+        saveAndClose()
         If FolderBrowser.ShowDialog() = Windows.Forms.DialogResult.OK Then
             proyectPath = FolderBrowser.SelectedPath
             reloadChapters()
@@ -30,28 +33,39 @@ Public Class Form1
             tsb_reloadChapters.Enabled = True
             tsb_rechapter.Enabled = True
             tsmi_reindexing.Enabled = True
-            tscb_chapters.BackColor = Color.White
+            tsb_save.BackColor = Form.DefaultBackColor
         End If
-
     End Sub
     Public Sub closeProyect()
+        saveAndClose()
         proyectPath = ""
         Me.Text = "WPook"
         tscb_chapters.Enabled = False
         tscb_chapters.Items.Clear()
         tscb_chapters.Text = ""
-        rtxt_texto.Enabled = False
         rtxt_texto.Text = ""
+        rtxt_texto.Enabled = False
+        lbl_nPalabras.Text = ""
+        originalPath = ""
         tsb_reloadChapters.Enabled = False
         tsb_rechapter.Enabled = False
         tsmi_reindexing.Enabled = False
-        tscb_chapters.BackColor = Form.DefaultBackColor
-        lbl_nPalabras.Text = ""
-
+        tsb_save.BackColor = Form.DefaultBackColor
     End Sub
     Private Sub rtxt_texto_TextChanged(sender As Object, e As EventArgs) Handles rtxt_texto.TextChanged
-        WordCount()
-        tscb_chapters.BackColor = Color.Red
+        If rtxt_texto.Text <> "" Then
+            lbl_nPalabras.Text = ""
+        Else
+            Dim cuenta_palabras = Split(rtxt_texto.Text, " ")
+            Dim npalabras As Integer = UBound(cuenta_palabras) + 1
+            lbl_nPalabras.Text = "Conteo: " & npalabras & " palabras y " & Len(rtxt_texto.Text) & " caracteres"
+        End If
+
+        If rtxt_texto.Text <> originalPath Then
+            tsb_save.BackColor = Color.Red
+        Else
+            tsb_save.BackColor = Form.DefaultBackColor
+        End If
     End Sub
     Public Sub reloadChapters()
         tscb_chapters.Items.Clear()
@@ -97,8 +111,9 @@ Public Class Form1
             If tscb_chapters.SelectedItem <> "Nuevo Capitulo" Then 'GUARDAR
                 Dim archivo As String = proyectPath & "\" & tscb_chapters.SelectedItem & ".wpok"
                 fileSystem.WriteAllText(archivo, rtxt_texto.Text, False)
-                tscb_chapters.BackColor = Color.White
-                MsgBox("Archivo guardado correctamente")
+                tsb_save.BackColor = Form.DefaultBackColor
+                originalPath = rtxt_texto.Text
+                MsgBox("Archivo guardado correctamente", MsgBoxStyle.OkOnly, "Guardado")
 
             Else 'GUARDAR COMO -> Nuevo Capitulo
 
@@ -145,11 +160,17 @@ Public Class Form1
     Private Sub tsmi_Guardar_Click(sender As Object, e As EventArgs) Handles tsmi_save.Click
         save()
     End Sub
+    Private Sub tsb_save_Click(sender As Object, e As EventArgs) Handles tsb_save.Click
+        save()
+    End Sub
     Private Sub tsb_reOrderChapter_Click(sender As Object, e As EventArgs) Handles tsb_rechapter.Click
+        'Cambiar nombre para ser igual que el otro (reindexing)
+        saveAndClose()
         WinRechapter.Show()
     End Sub
     Private Sub tsb_refrescarCapitulos_Click(sender As Object, e As EventArgs) Handles tsb_reloadChapters.Click
         'Al final este objeto acabara por desaparecer ya que la recarga se hara de forma automatica
+        saveAndClose()
         'reloadChapters()
         'filesindex()
         pruebaBucles()
@@ -166,9 +187,11 @@ Public Class Form1
         closeProyect()
     End Sub
     Private Sub tsmi_salir_Click(sender As Object, e As EventArgs) Handles tsmi_exit.Click
+        saveAndClose()
         Me.Close()
     End Sub
     Private Sub tsmi_reindexing_Click(sender As Object, e As EventArgs) Handles tsmi_reindexing.Click
+        saveAndClose()
         WinRechapter.Show()
     End Sub
     Private Sub tmsi_copiar_Click(sender As Object, e As EventArgs) Handles tmsi_copiar.Click
@@ -190,18 +213,27 @@ Public Class Form1
         System.Diagnostics.Process.Start("https://trello.com/b/Sf3Letyl/wpook")
     End Sub
     Private Sub AutoSave_Tick(sender As Object, e As EventArgs) Handles AutoSave.Tick
-        '300 000 5 mins
+        '300 000 = 5 mins
         save()
     End Sub
-    Private Sub cb_capitulos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tscb_chapters.SelectedIndexChanged
+    Private Sub tscb_capitulos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tscb_chapters.SelectedIndexChanged
+        saveAndClose()
         If tscb_chapters.SelectedItem = "Nuevo Capitulo" Then
             rtxt_texto.Text = ""
-        Else ' El fallo de aqui se debe a que se guarda al final con un pipeline(|) extra
+        Else
             Dim fileReader As String = fileSystem.ReadAllText(proyectPath & "\" & tscb_chapters.SelectedItem & ".wpok")
             rtxt_texto.Text = fileReader
+            originalPath = fileReader
         End If
         rtxt_texto.Select()
-        tscb_chapters.BackColor = Color.White
+        tsb_save.BackColor = Form.DefaultBackColor
+    End Sub
+    Private Sub tsb_save_BackColorChanged(sender As Object, e As EventArgs) Handles tsb_save.BackColorChanged
+        If tsb_save.BackColor = Form.DefaultBackColor Then
+            AutoSave.Enabled = False
+        ElseIf tsb_save.BackColor = Color.Red Then
+            AutoSave.Enabled = True
+        End If
     End Sub
     Private Sub proyecto_blanco()
         Me.Text = "Nuevo Proyecto - WPook"
@@ -219,15 +251,6 @@ Public Class Form1
         End If
         Return fileindex
     End Function
-    Private Sub WordCount()
-        'If rtxt_texto.Text <> "" Then
-        ' lbl_nPalabras.Text = ""
-        'Else
-        Dim cuenta_palabras = Split(rtxt_texto.Text, " ")
-        Dim npalabras As Integer = UBound(cuenta_palabras) + 1
-        lbl_nPalabras.Text = "Conteo: " & npalabras & " palabras y " & Len(rtxt_texto.Text) & " caracteres"
-        ' End If
-    End Sub
     Public Sub pruebaBucles()  'Aun no funciona 
         'Dim arIndex As ArrayList
         'Dim indexFile
@@ -311,5 +334,17 @@ Public Class Form1
         '    ' consola el resultado del vector Linea3.
         '    MsgBox("")
     End Sub
+    Public Sub saveAndClose()
+        If tsb_save.BackColor = Color.Red Then
+            Dim saves = MessageBox.Show("¿Desea guardar los ultimos cambios de " & tscb_chapters.SelectedItem & " antes de continuar?",
+                           "Guardar Cambios", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning)
+            If saves = DialogResult.Yes Then
+                save()
+            ElseIf saves = DialogResult.Cancel Then
+                Exit Sub 'Sale del metodo pero necesito que salga del metodo en el que se usa 
+            Else
 
+            End If
+        End If
+    End Sub
 End Class
