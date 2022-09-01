@@ -1,5 +1,5 @@
-﻿Imports System.Drawing.Drawing2D
-Imports System.IO
+﻿Imports System.IO
+Imports System.Configuration
 
 Public Class Form1
     'Esta variable almacena la ruta del proyecto. 
@@ -170,10 +170,11 @@ Public Class Form1
     End Sub
     Private Sub tsb_refrescarCapitulos_Click(sender As Object, e As EventArgs) Handles tsb_reloadChapters.Click
         'Al final este objeto acabara por desaparecer ya que la recarga se hara de forma automatica
-        saveAndClose()
+        'saveAndClose()
         'reloadChapters()
         'filesindex()
         pruebaBucles()
+        usingAppConfigFile()
     End Sub
     Private Sub tsmi_deleteProyect_Click(sender As Object, e As EventArgs) Handles tsmi_deleteProyect.Click
         fileSystem.DeleteDirectory(proyectPath,
@@ -333,6 +334,23 @@ Public Class Form1
         '    ' Este mensaje lo ponemos para que nos de tiempo a visualizar en la
         '    ' consola el resultado del vector Linea3.
         '    MsgBox("")
+    End Sub
+    Public Sub usingAppConfigFile()
+
+        'Dim configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None)
+        'Dim name As String = ConfigurationManager.AppSettings("TIMER_INTERVAL")
+        'MsgBox(name)
+
+        'configuration.AppSettings.Settings.Remove("TIMER_INTERVAL")
+        ''configuration.AppSettings.Settings.Add("TIMER_INTERVAL", 600000)
+        'configuration.Save(ConfigurationSaveMode.Modified)
+        ''End
+
+        ''NO Funciona
+        ''Dim name As String = ConfigurationManager.AppSettings("TIMER_INTERVAL")
+        ''ConfigurationManager.AppSettings("TIMER_INTERVAL").Replace(name, 600000)
+        ''https://www.aspsnippets.com/Articles/Read-AppSettings-value-from-AppConfig-file-using-C-and-VBNet.aspx
+
     End Sub
     Public Sub saveAndClose()
         If tsb_save.BackColor = Color.Red Then
