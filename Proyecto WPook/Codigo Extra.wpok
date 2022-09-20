@@ -1,0 +1,63 @@
+Public Class Form1
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        For Each archivo As String In My.Computer.FileSystem.GetFiles("D:\Mundo Uzumaki", FileIO.SearchOption.SearchAllSubDirectories, "*.txt")
+            Dim nomArchivo = IO.Path.GetFileName(archivo)
+            cb_capitulos.Items.Add(nomArchivo)
+        Next
+    End Sub
+    Private Sub tsmi_Nuevo_Click(sender As Object, e As EventArgs) Handles tsmi_Nuevo.Click
+        FileClose()
+    End Sub
+
+    Private Sub tsmi_Abrir_Click_1(sender As Object, e As EventArgs) Handles tsmi_Abrir.Click
+        abrirProyecto()
+    End Sub
+
+    Private Sub tsmi_Guardar_Click_1(sender As Object, e As EventArgs) Handles tsmi_Guardar.Click
+        guardarArchivo()
+    End Sub
+
+    Sub guardarArchivo()
+
+        ' NOTA: ESTA SINTAXIX DEVUELVE EL NUMERO DE ARCHIVOS QUE HAY EN UN DIRECTORIO
+        Dim Total As Integer = My.Computer.FileSystem.GetFiles("D:\Mundo Uzumaki", FileIO.SearchOption.SearchAllSubDirectories, "*.txt").Count
+
+
+        SaveFileDialog1.Filter = "Archivos de Texto (*.txt*)|*.txt"
+        If SaveFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+            'Aqui obtenemos la ruta entera del archivo
+            Dim rutaArchivo = SaveFileDialog1.FileName
+            'Obtenemos el nombre del archivo separandolo de la ruta completa
+            Dim nomArchivo = IO.Path.GetFileName(rutaArchivo)
+            'Remplazamos la ruta, al modificar el nombre que nosotros hemos puesto añadiendole el numero de capitulos  
+            Dim regFinal = rutaArchivo.Replace(nomArchivo, "ch" & Total & "-" & nomArchivo)
+
+            My.Computer.FileSystem.WriteAllText(regFinal, RichTextBox1.Text, True)
+        End If
+    End Sub
+    Sub abrirProyecto()
+        'Dim fileReader As String
+        'fileReader = My.Computer.FileSystem.ReadAllText("D:\pword.docx")
+        'RichTextBox1.Text = fileReader
+
+        Dim fileReader As String
+        OpenFileDialog1.ShowDialog()
+        Dim filepath = OpenFileDialog1.FileName
+        fileReader = My.Computer.FileSystem.ReadAllText(filepath)
+        RichTextBox1.Text = fileReader
+        lbl_archivo.Text = IO.Path.GetFileName(filepath)
+        Close()
+
+    End Sub
+    Sub abrirArchivo()
+        Dim fileReader As String
+        fileReader = My.Computer.FileSystem.ReadAllText("D:\pword.docx")
+        RichTextBox1.Text = fileReader
+    End Sub
+
+    Private Sub Form2ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles Form2ToolStripMenuItem.Click
+        Form2.Show()
+    End Sub
+
+
+End Class

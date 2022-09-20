@@ -22,33 +22,33 @@ Partial Class WinProyectsCreator
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-		Me.lbl_nameProyect = New System.Windows.Forms.Label()
-		Me.txt_nameProyect = New System.Windows.Forms.TextBox()
-        Me.lbl_Path = New System.Windows.Forms.Label
+        Me.lbl_nameProyect = New System.Windows.Forms.Label()
+        Me.txt_nameProyect = New System.Windows.Forms.TextBox()
+        Me.lbl_Path = New System.Windows.Forms.Label()
         Me.txt_Path = New System.Windows.Forms.TextBox()
-		Me.btn_create = New System.Windows.Forms.Button()
+        Me.btn_create = New System.Windows.Forms.Button()
         Me.btn_cancel = New System.Windows.Forms.Button()
-		Me.btn_examine = New System.Windows.Forms.Button()
-		Me.FolderBrowser = New System.Windows.Forms.FolderBrowserDialog()
+        Me.btn_examine = New System.Windows.Forms.Button()
+        Me.FolderBrowser = New System.Windows.Forms.FolderBrowserDialog()
         Me.SuspendLayout()
         '
         'lbl_nameProyect
         '
-		Me.lbl_nameProyect.AutoSize = True						  
-		Me.lbl_nameProyect.Location = New System.Drawing.Point(26, 26)
+        Me.lbl_nameProyect.AutoSize = True
+        Me.lbl_nameProyect.Location = New System.Drawing.Point(26, 26)
         Me.lbl_nameProyect.Name = "lbl_nameProyect"
         Me.lbl_nameProyect.Size = New System.Drawing.Size(109, 13)
         Me.lbl_nameProyect.TabIndex = 0
         Me.lbl_nameProyect.Text = "Nombre del Proyecto:"
         '
-		'txt_nameProyect
+        'txt_nameProyect
         '
         Me.txt_nameProyect.Location = New System.Drawing.Point(29, 42)
         Me.txt_nameProyect.Name = "txt_nameProyect"
         Me.txt_nameProyect.Size = New System.Drawing.Size(253, 20)
         Me.txt_nameProyect.TabIndex = 1
         '
-		'lbl_Path
+        'lbl_Path
         '
         Me.lbl_Path.AutoSize = True
         Me.lbl_Path.Location = New System.Drawing.Point(26, 70)
@@ -57,22 +57,13 @@ Partial Class WinProyectsCreator
         Me.lbl_Path.TabIndex = 2
         Me.lbl_Path.Text = "Ubicación"
         '
-        'txt_path
+        'txt_Path
         '
-        Me.txt_path.Location = New System.Drawing.Point(29, 87)
-        Me.txt_path.Name = "txt_path"
-        Me.txt_path.Size = New System.Drawing.Size(229, 20)
-        Me.txt_path.TabIndex = 3
-        '
-        'btn_examine
-        '
-        Me.btn_examine.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btn_examine.Location = New System.Drawing.Point(256, 87)
-        Me.btn_examine.Name = "btn_examine"
-        Me.btn_examine.Size = New System.Drawing.Size(26, 20)
-        Me.btn_examine.TabIndex = 6
-        Me.btn_examine.Text = "..."
-        Me.btn_examine.UseVisualStyleBackColor = True
+        Me.txt_Path.Location = New System.Drawing.Point(29, 87)
+        Me.txt_Path.Name = "txt_Path"
+        Me.txt_Path.ReadOnly = True
+        Me.txt_Path.Size = New System.Drawing.Size(229, 20)
+        Me.txt_Path.TabIndex = 3
         '
         'btn_create
         '
@@ -93,12 +84,22 @@ Partial Class WinProyectsCreator
         Me.btn_cancel.Text = "Cancelar"
         Me.btn_cancel.UseVisualStyleBackColor = True
         '
-		'FolderBrowser
+        'btn_examine
+        '
+        Me.btn_examine.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btn_examine.Location = New System.Drawing.Point(256, 87)
+        Me.btn_examine.Name = "btn_examine"
+        Me.btn_examine.Size = New System.Drawing.Size(26, 20)
+        Me.btn_examine.TabIndex = 6
+        Me.btn_examine.Text = "..."
+        Me.btn_examine.UseVisualStyleBackColor = True
+        '
+        'FolderBrowser
         '
         Me.FolderBrowser.SelectedPath = "C:\Users\PabloAja1000\Documents\Libros\ProyectoWPook"
         '
         'WinProyectsCreator
-        '						   
+        '
         Me.AcceptButton = Me.btn_create
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -108,7 +109,7 @@ Partial Class WinProyectsCreator
         Me.Controls.Add(Me.btn_examine)
         Me.Controls.Add(Me.btn_cancel)
         Me.Controls.Add(Me.btn_create)
-        Me.Controls.Add(Me.txt_path)
+        Me.Controls.Add(Me.txt_Path)
         Me.Controls.Add(Me.lbl_Path)
         Me.Controls.Add(Me.txt_nameProyect)
         Me.Controls.Add(Me.lbl_nameProyect)
@@ -117,6 +118,7 @@ Partial Class WinProyectsCreator
         Me.Text = "Nuevo Proyecto - WPook"
         Me.ResumeLayout(False)
         Me.PerformLayout()
+
     End Sub
 
     Friend WithEvents lbl_nameProyect As Label				 

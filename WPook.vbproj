@@ -49,6 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -118,6 +119,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinProyectsCreator.resx">
+      <DependentUpon>WinProyectsCreator.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinRechapter.resx">
       <DependentUpon>WinRechapter.vb</DependentUpon>

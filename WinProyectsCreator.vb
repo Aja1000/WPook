@@ -1,29 +1,36 @@
 ﻿Imports System.IO
-
 Public Class WinProyectsCreator
+    Dim pathProyect As String = ""
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Form1.Enabled = False
         ControlBox = False
+        txt_Path.BackColor = Color.White
+    End Sub
+    Private Sub txt_nameProyect_TextChanged(sender As Object, e As EventArgs) Handles txt_nameProyect.TextChanged
+        If txt_Path.Text <> "" Then txt_Path.Text = Trim(pathProyect & "\" & txt_nameProyect.Text)
+        txt_Path.Select(txt_Path.Text.Length, 0)
     End Sub
     Private Sub btn_examinar_Click(sender As Object, e As EventArgs) Handles btn_examine.Click
         If FolderBrowser.ShowDialog = Windows.Forms.DialogResult.OK Then
             txt_Path.Text = FolderBrowser.SelectedPath.TrimEnd("\")
-
-            btn_create.Select()
+            pathProyect = Trim(txt_Path.Text)
+            If txt_nameProyect.Text <> "" Then txt_Path.Text = Trim(FolderBrowser.SelectedPath & "\" & txt_nameProyect.Text)
+            txt_Path.Select(txt_Path.Text.Length, 0)
+            btn_create.Focus()
         End If
     End Sub
     Private Sub btn_crear_Click(sender As Object, e As EventArgs) Handles btn_create.Click
         Dim nameProyect As String = Trim(txt_nameProyect.Text)
         With Form1
-            If txt_nameProyect.Text <> "" AndAlso Directory.Exists(txt_Path.Text) Then
+            MsgBox(pathProyect)
+            If nameProyect <> "" AndAlso Directory.Exists(pathProyect) Then
                 .proyectPath = Trim(txt_Path.Text & "\" & nameProyect)
-                If Not (Directory.Exists(Form1.proyectPath)) Then
-                    .fileSystem.CreateDirectory(Form1.proyectPath)
+                If Not (Directory.Exists(.proyectPath)) Then
+                    .fileSystem.CreateDirectory(.proyectPath)
                     ' Una vez creada la carpeta sustiuimos espacios por barra_bajas para dejar el archivo index sin espacios
-                    nameProyect = nameProyect.Replace(" ", "_")
-                    'Console.WriteLine(Form1.proyectPath & "\" & nameProyect & ".index", "", False)
-                    Form1.fileSystem.WriteAllText(Form1.proyectPath & "\" & nameProyect & ".index", "", False) 'AAAAAAAAAAAAACreacion Index
-                    .Text = Path.GetFileName(Form1.proyectPath) & " - WPook"
+                    nameProyect += nameProyect.Replace(" ", "_")
+                    Form1.fileSystem.WriteAllText(.proyectPath & "\" & nameProyect & ".index", "", False)
+                    .Text = Path.GetFileName(.proyectPath) & " - WPook"
                     .Enabled = True
                     .rtxt_texto.Enabled = True
                     .tscb_chapters.Enabled = True
@@ -33,10 +40,14 @@ Public Class WinProyectsCreator
                     .tsb_rechapter.Enabled = True
                     Me.Close()
                 Else
-                    MsgBox("Ya existe este Proyecto")
+                    MsgBox("El proyecto " & pathProyect & " ya existe.", MsgBoxStyle.OkOnly, "Proyecto Existente")
                 End If
             Else
-                MsgBox("No existe esta ruta")
+                If nameProyect = "" Then
+                    MsgBox("El proyecto necesita un nombre.", MsgBoxStyle.OkOnly, "Nombre Proyecto")
+                ElseIf txt_Path.Text = "" Then
+                    MsgBox("Necesitamos una ruta en la que alojar el proyecto", MsgBoxStyle.OkOnly, "Ruta Vacia")
+                End If
             End If
         End With
     End Sub
