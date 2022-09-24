@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Form1
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
@@ -63,14 +63,15 @@ Partial Class Form1
         Me.Shotcuts = New System.Windows.Forms.ToolStrip()
         Me.tsb_new = New System.Windows.Forms.ToolStripButton()
         Me.tsb_open = New System.Windows.Forms.ToolStripButton()
+        Me.tsb_save = New System.Windows.Forms.ToolStripButton()
         Me.tsb_reloadChapters = New System.Windows.Forms.ToolStripButton()
         Me.tsb_rechapter = New System.Windows.Forms.ToolStripButton()
         Me.tscb_chapters = New System.Windows.Forms.ToolStripComboBox()
         Me.tslbl_Chapters = New System.Windows.Forms.ToolStripLabel()
+        Me.btn_Excel = New System.Windows.Forms.ToolStripButton()
         Me.SaveFile = New System.Windows.Forms.SaveFileDialog()
         Me.lbl_nPalabras = New System.Windows.Forms.Label()
         Me.AutoSave = New System.Windows.Forms.Timer(Me.components)
-        Me.tsb_save = New System.Windows.Forms.ToolStripButton()
         Me.MainMenu.SuspendLayout()
         Me.Shotcuts.SuspendLayout()
         Me.SuspendLayout()
@@ -324,12 +325,14 @@ Partial Class Form1
         '
         'FolderBrowser
         '
-        Me.FolderBrowser.SelectedPath = "D:\PruebasWpook"
+        Me.FolderBrowser.SelectedPath = "C:\Users\PabloAja1000\Documents\Pequeños Proyectos Programacion\puntoNET\WPook\Pr" &
+    "oyecto WPook"
         '
         'Shotcuts
         '
         Me.Shotcuts.BackColor = System.Drawing.SystemColors.Menu
-        Me.Shotcuts.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_new, Me.tsb_open, Me.tsb_save, Me.tsb_reloadChapters, Me.tsb_rechapter, Me.tscb_chapters, Me.tslbl_Chapters})
+        Me.Shotcuts.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.Shotcuts.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsb_new, Me.tsb_open, Me.tsb_save, Me.tsb_reloadChapters, Me.tsb_rechapter, Me.tscb_chapters, Me.tslbl_Chapters, Me.btn_Excel})
         Me.Shotcuts.Location = New System.Drawing.Point(0, 24)
         Me.Shotcuts.Name = "Shotcuts"
         Me.Shotcuts.Size = New System.Drawing.Size(978, 25)
@@ -353,6 +356,15 @@ Partial Class Form1
         Me.tsb_open.Name = "tsb_open"
         Me.tsb_open.Size = New System.Drawing.Size(23, 22)
         Me.tsb_open.Text = "Abrir"
+        '
+        'tsb_save
+        '
+        Me.tsb_save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsb_save.Image = CType(resources.GetObject("tsb_save.Image"), System.Drawing.Image)
+        Me.tsb_save.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsb_save.Name = "tsb_save"
+        Me.tsb_save.Size = New System.Drawing.Size(23, 22)
+        Me.tsb_save.Text = "Guardar"
         '
         'tsb_reloadChapters
         '
@@ -388,6 +400,15 @@ Partial Class Form1
         Me.tslbl_Chapters.Size = New System.Drawing.Size(60, 22)
         Me.tslbl_Chapters.Text = "Capitulos:"
         '
+        'btn_Excel
+        '
+        Me.btn_Excel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btn_Excel.Image = CType(resources.GetObject("btn_Excel.Image"), System.Drawing.Image)
+        Me.btn_Excel.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btn_Excel.Name = "btn_Excel"
+        Me.btn_Excel.Size = New System.Drawing.Size(23, 22)
+        Me.btn_Excel.Text = "Excel"
+        '
         'lbl_nPalabras
         '
         Me.lbl_nPalabras.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
@@ -401,15 +422,6 @@ Partial Class Form1
         '
         Me.AutoSave.Enabled = True
         Me.AutoSave.Interval = 600000
-        '
-        'tsb_save
-        '
-        Me.tsb_save.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsb_save.Image = CType(resources.GetObject("tsb_save.Image"), System.Drawing.Image)
-        Me.tsb_save.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsb_save.Name = "tsb_save"
-        Me.tsb_save.Size = New System.Drawing.Size(23, 22)
-        Me.tsb_save.Text = "Guardar"
         '
         'Form1
         '
@@ -480,4 +492,5 @@ Partial Class Form1
     Friend WithEvents lbl_nPalabras As Label
     Public WithEvents AutoSave As Timer
     Friend WithEvents tsb_save As ToolStripButton
+    Friend WithEvents btn_Excel As ToolStripButton
 End Class

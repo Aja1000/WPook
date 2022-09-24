@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Public Class WinProyectsCreator
     Dim pathProyect As String = ""
+
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Form1.Enabled = False
         ControlBox = False
@@ -22,14 +23,14 @@ Public Class WinProyectsCreator
     Private Sub btn_crear_Click(sender As Object, e As EventArgs) Handles btn_create.Click
         Dim nameProyect As String = Trim(txt_nameProyect.Text)
         With Form1
-            MsgBox(pathProyect)
             If nameProyect <> "" AndAlso Directory.Exists(pathProyect) Then
-                .proyectPath = Trim(txt_Path.Text & "\" & nameProyect)
+                .proyectPath = Trim(txt_Path.Text)
                 If Not (Directory.Exists(.proyectPath)) Then
-                    .fileSystem.CreateDirectory(.proyectPath)
+                    Directory.CreateDirectory(.proyectPath)
                     ' Una vez creada la carpeta sustiuimos espacios por barra_bajas para dejar el archivo index sin espacios
-                    nameProyect += nameProyect.Replace(" ", "_")
-                    Form1.fileSystem.WriteAllText(.proyectPath & "\" & nameProyect & ".index", "", False)
+                    nameProyect = nameProyect.Replace(" ", "_")
+
+                    File.WriteAllText(.proyectPath & "\" & nameProyect & ".index", "")
                     .Text = Path.GetFileName(.proyectPath) & " - WPook"
                     .Enabled = True
                     .rtxt_texto.Enabled = True
